@@ -30,7 +30,49 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+```
 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char text[100], key[100], cipher[100];
+    int i, j = 0, shift, len;
+
+    printf("Enter plaintext: ");
+    scanf("%99s", text);
+
+    printf("Enter key: ");
+    scanf("%99s", key);
+
+    len = strlen(key);
+
+    for (i = 0; text[i] != '\0'; i++) {
+        shift = toupper(key[j % len]) - 'A';
+        cipher[i] = (toupper(text[i]) - 'A' + shift) % 26 + 'A';
+        j++;
+    }
+    cipher[i] = '\0';
+
+    printf("Encrypted text: %s\n", cipher);
+
+    j = 0;
+    for (i = 0; cipher[i] != '\0'; i++) {
+        shift = toupper(key[j % len]) - 'A';
+        text[i] = (cipher[i] - 'A' - shift + 26) % 26 + 'A';
+        j++;
+    }
+    text[i] = '\0';
+
+    printf("Decrypted text: %s\n", text);
+
+    return 0;
+}
+
+```
 ## OUTPUT
+<img width="1917" height="785" alt="image" src="https://github.com/user-attachments/assets/1a1e7f98-b59d-482d-b66c-636a586b00fc" />
 
 ## RESULT
+Thus, the Vigenère Cipher encryption and decryption program was executed successfully.
