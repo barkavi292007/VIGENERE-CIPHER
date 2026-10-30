@@ -36,43 +36,62 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 #include <string.h>
 #include <ctype.h>
 
-int main() {
-    char text[100], key[100], cipher[100];
-    int i, j = 0, shift, len;
+int main()
+{
+    char text[100], key[100];
+    char encrypted[100], decrypted[100];
+    int i, j = 0, len;
 
     printf("Enter plaintext: ");
-    scanf("%99s", text);
+    fgets(text, sizeof(text), stdin);
 
     printf("Enter key: ");
-    scanf("%99s", key);
+    scanf("%s", key);
 
-    len = strlen(key);
+    len = strlen(text);
 
-    for (i = 0; text[i] != '\0'; i++) {
-        shift = toupper(key[j % len]) - 'A';
-        cipher[i] = (toupper(text[i]) - 'A' + shift) % 26 + 'A';
-        j++;
+    for(i = 0; i < len; i++)
+    {
+        if(isalpha(text[i]))
+        {
+            char ch = toupper(text[i]);
+            char k = toupper(key[j % strlen(key)]);
+
+            encrypted[i] = ((ch - 'A' + k - 'A') % 26) + 'A';
+            j++;
+        }
+        else
+            encrypted[i] = text[i];
     }
-    cipher[i] = '\0';
+    encrypted[len] = '\0';
 
-    printf("Encrypted text: %s\n", cipher);
+    printf("\nEncrypted text: %s", encrypted);
 
     j = 0;
-    for (i = 0; cipher[i] != '\0'; i++) {
-        shift = toupper(key[j % len]) - 'A';
-        text[i] = (cipher[i] - 'A' - shift + 26) % 26 + 'A';
-        j++;
-    }
-    text[i] = '\0';
+    for(i = 0; i < len; i++)
+    {
+        if(isalpha(text[i]))
+        {
+            char ch = toupper(encrypted[i]);
+            char k = toupper(key[j % strlen(key)]);
 
-    printf("Decrypted text: %s\n", text);
+            decrypted[i] = ((ch - k + 26) % 26) + 'A';
+            j++;
+        }
+        else
+            decrypted[i] = text[i];
+    }
+    decrypted[len] = '\0';
+
+    printf("\nDecrypted text: %s", decrypted);
 
     return 0;
 }
 
+
 ```
 ## OUTPUT
-<img width="1917" height="785" alt="image" src="https://github.com/user-attachments/assets/1a1e7f98-b59d-482d-b66c-636a586b00fc" />
+<img width="923" height="446" alt="image" src="https://github.com/user-attachments/assets/303fda48-b6e2-4e19-98c9-c10c2fec622f" />
 
 ## RESULT
 Thus, the Vigenère Cipher encryption and decryption program was executed successfully.
